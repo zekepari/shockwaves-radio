@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/prisma";
+import prisma from "@/prisma";
 import path from "path";
 import fs from "fs/promises";
 
