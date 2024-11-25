@@ -34,11 +34,6 @@ export default function Footer() {
                   Home
                 </Link>
               </li>
-              <li>
-                <Link href="/shows" className="text-lg opacity-80 hover:opacity-100">
-                  Upcoming Shows
-                </Link>
-              </li>
             </ul>
           </div>
 
