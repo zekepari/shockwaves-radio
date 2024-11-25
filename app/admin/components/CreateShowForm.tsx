@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { createShow } from "@/app/actions";
-import { Show, Host } from "@prisma/client";
+import { Host } from "@prisma/client";
 import { ShowWithHost } from "@/types/Prisma";
 
 interface CreateShowFormProps {
@@ -74,8 +74,12 @@ export default function CreateShowForm({ onShowCreated, hosts }: CreateShowFormP
         if (onShowCreated) {
           onShowCreated(formattedShow);
         }
-      } catch (err: any) {
-        setError(err.message || "Failed to create show.");
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unexpected error occurred");
+        }
       }
     });
   };

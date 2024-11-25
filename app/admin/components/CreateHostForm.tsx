@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { createHost } from "@/app/actions"; // Import the server action
+import { createHost } from "@/app/actions";
 
 export default function CreateHostForm({ onHostCreated }: { onHostCreated: () => void }) {
   const [name, setName] = useState("");
@@ -26,13 +26,17 @@ export default function CreateHostForm({ onHostCreated }: { onHostCreated: () =>
 
     startTransition(async () => {
       try {
-        await createHost(formData); // Call the server action directly
+        await createHost(formData);
         setSuccess("Host created successfully!");
         setName("");
         setImageFile(null);
-        onHostCreated(); // Trigger parent refresh
-      } catch (err: any) {
-        setError(err.message || "Failed to create host");
+        onHostCreated();
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unexpected error occurred");
+        }
       }
     });
   };
