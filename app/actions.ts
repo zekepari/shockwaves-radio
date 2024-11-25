@@ -3,6 +3,8 @@
 import prisma from "@/prisma";
 import path from "path";
 import fs from "fs/promises";
+import { auth } from "@/auth";
+import { isStaff } from "@/lib/Staff";
 
 export async function getHosts() {
     try {
@@ -21,6 +23,12 @@ export async function getHosts() {
   }
   
   export async function createHost(formData: FormData) {
+    const session = await auth();
+
+    if (isStaff(session?.user?.id)) {
+      return
+    }
+
     const name = formData.get("name")?.toString();
     const image = formData.get("image") as File;
   
@@ -62,6 +70,12 @@ hostId: string;
 startTime: string;
 endTime: string;
 }) {
+  const session = await auth();
+
+  if (isStaff(session?.user?.id)) {
+    return
+  }
+  
 const { name, hostId, startTime, endTime } = data;
 
 if (!name || !hostId || !startTime || !endTime) {

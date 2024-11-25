@@ -4,6 +4,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import Navbar from "@/components/Navbar";
 import { WebSocketProvider } from "@/contexts/WebSocketContext";
+import Footer from "@/components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,6 +36,7 @@ export default function RootLayout({
           >
               <Navbar/>
               {children}
+              <Footer />
           </body>
         </WebSocketProvider>
       </SessionProvider>

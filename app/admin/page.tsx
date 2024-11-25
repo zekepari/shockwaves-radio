@@ -3,15 +3,16 @@ import DashboardProvider from "@/contexts/DashboardContext";
 import { auth } from "@/auth";
 import HostSection from "./components/HostSection";
 import ShowSection from "./components/ShowSection";
+import { isStaff } from "@/lib/staff";
 
 export default async function Page() {
   const session = await auth();
 
-  if (!session || !session.user) {
+  if (!session || !session.user || !session.user.id) {
     redirect("/auth/signin");
   }
 
-  if (session.user.id !== "952777630078341121") {
+  if (isStaff(session.user.id)) {
     return <div className="text-center text-red-500 font-bold mt-8">Not staff</div>;
   }
 

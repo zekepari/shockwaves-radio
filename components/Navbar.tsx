@@ -125,6 +125,7 @@ export default function NavbarBanner() {
                 <Link
                   key={index}
                   href={link.href}
+                  target={link.external ? "_blank" : ""}
                   className="btn btn-ghost btn-sm"
                 >
                   {link.name}
