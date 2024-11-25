@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Show {
+  id        String   @id @default(cuid())
+  name      String
+  startTime DateTime
+  endTime   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  hostId    String
+  host      Host     @relation(fields: [hostId], references: [id])
+
+  @@index([hostId], map: "Show_hostId_fkey")
+}
+
+model Host {
+  id        String   @id @default(cuid())
+  name      String
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  shows     Show[]
+}

@@ -12,8 +12,18 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      animation: {
+        'spin-slow': 'spin 10s linear infinite',
+      }
     },
+    container: {
+      center: true,
+      padding: "2rem"
+    }
   },
-  plugins: [],
+  plugins: [require('daisyui')],
+  daisyui: {
+    themes: ["night"]
+  }
 };
 export default config;

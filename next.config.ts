@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'vh-azura01.radio.volthosting.co.uk',
+        pathname: '/api/station/**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
