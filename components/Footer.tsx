@@ -57,8 +57,9 @@ export default function Footer() {
         </div>
 
         {/* Copyright and Legal */}
-        <div className="text-center text-sm opacity-60 space-y-2">
+        <div className="text-center text-sm opacity-60">
           <p>&copy; {new Date().getFullYear()} Shockwaves Radio. All rights reserved.</p>
+          <p>Brought to you with ❤️ from Crate Expectations Limited</p>
           <Link href="/terms-of-service" className="opacity-80 hover:opacity-100">
             Terms of Service
           </Link>
