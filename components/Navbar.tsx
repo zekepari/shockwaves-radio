@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPauseCircle, faPlayCircle } from '@fortawesome/free-regular-svg-icons';
+import { isStaff } from '@/lib/Staff';
 
 export default function NavbarBanner() {
   const { data: session } = useSession();
@@ -138,7 +139,7 @@ export default function NavbarBanner() {
               {session?.user ? (
                 <>
                   <span className="font-semibold">Welcome, {session.user.name}!</span>
-                  {session.user.id === '952777630078341121' && (
+                  {isStaff(session.user.id) && (
                     <Link href="/admin" className="btn btn-accent btn-sm">
                       Admin Panel
                     </Link>
