@@ -3,7 +3,7 @@ import DashboardProvider from "@/contexts/DashboardContext";
 import { auth } from "@/auth";
 import HostSection from "./components/HostSection";
 import ShowSection from "./components/ShowSection";
-import { isStaff } from "@/lib/staff";
+import { isStaff } from "@/lib/Staff";
 
 export default async function Page() {
   const session = await auth();
