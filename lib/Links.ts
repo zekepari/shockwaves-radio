@@ -9,6 +9,7 @@ interface NavLink {
 export const navLinks: NavLink[] = [
   { href: "/", name: "Home" },
   { href: "https://discord.gg/PAAJvRpDVN", name: "Discord", external: true },
+  { href: "https://ko-fi.com/shockwavesradio", name: "Ko-Fi", external: true},
   { href: "/terms-of-service", name: "Terms of Service" },
 ];
 
