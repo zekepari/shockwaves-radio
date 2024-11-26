@@ -13,7 +13,7 @@ export default function Layout({
       <div className="flex justify-center gap-16">
         <div className="hidden 2xl:flex flex-col space-y-4">
           {leftAds.map((ad, index) => (
-            <Link key={index} href={ad.href} className="mx-auto">
+            <Link key={index} href={ad.href} className="mx-auto" target="_blank">
               <Image
                 className="rounded-box"
                 src={ad.src}
@@ -29,7 +29,7 @@ export default function Layout({
   
         <div className="hidden 2xl:flex flex-col space-y-4">
           {rightAds.map((ad, index) => (
-            <Link key={index} href={ad.href} className="mx-auto">
+            <Link key={index} href={ad.href} className="mx-auto" target="_blank">
               <Image
                 className="rounded-box"
                 src={ad.src}

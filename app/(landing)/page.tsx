@@ -35,7 +35,7 @@ export default async function Page() {
               <div className="space-y-4">
                 <p>No upcoming shows</p>
                 {fallbackAd && (
-                  <Link href={fallbackAd.href} className="block mx-auto">
+                  <Link href={fallbackAd.href} className="block mx-auto" target="_blank">
                     <Image
                       className="rounded-box"
                       src={fallbackAd.src}
