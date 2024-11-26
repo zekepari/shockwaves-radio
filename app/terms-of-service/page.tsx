@@ -1,8 +1,14 @@
 export default function Page() {
+  const effectiveDate = new Date(1732589042 * 1000).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
     <div className="container max-w-screen-lg">
       <h1 className="text-4xl font-bold mb-6">Shockwaves Radio Terms and Conditions of Use</h1>
-      <p className="mb-4">Effective Date: [Insert Date]</p>
+      <p className="mb-4">Effective Date: {effectiveDate}</p>
 
       <section className="mb-6">
         <h2 className="text-2xl font-semibold">1. Restrictions on Use</h2>
@@ -19,7 +25,7 @@ export default function Page() {
           <li>Use the materials for commercial purposes or public display without authorization.</li>
           <li>Reverse-engineer, decompile, or disassemble any software on the website.</li>
           <li>Remove any copyright or proprietary notices.</li>
-          <li>Transfer or "mirror" the materials on any other server.</li>
+          <li>Transfer or &quot;mirror&quot; the materials on any other server.</li>
         </ul>
         <p>
           Any violation of these restrictions may result in the termination of your access to the website. Upon
@@ -31,7 +37,7 @@ export default function Page() {
       <section className="mb-6">
         <h2 className="text-2xl font-semibold">2. Disclaimer of Warranties</h2>
         <p>
-          The materials on the Shockwaves Radio website are provided "as is" without any warranty, express or implied.
+          The materials on the Shockwaves Radio website are provided &quot;as is&quot; without any warranty, express or implied.
           Shockwaves Radio does not guarantee the accuracy, completeness, or reliability of the materials or content on
           the website. We disclaim all warranties, including implied warranties of merchantability or fitness for a
           particular purpose.
