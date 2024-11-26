@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function HostCard({ host }: { host: HostWithShowCount }) {
     return (
-        <div className="flex bg-base-100 rounded-box min-w-96 shadow-xl">
+        <div className="flex bg-base-100 rounded-box shadow-xl">
             {host.imageUrl ? (
                 <Image
                     src={host.imageUrl}

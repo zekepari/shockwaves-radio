@@ -48,7 +48,7 @@ export default function NavbarBanner() {
   };
 
   return (
-    <section className="relative w-full h-[35vh] text-white">
+    <section className="relative w-full h-[450px] text-white">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-40 shadow-xl"

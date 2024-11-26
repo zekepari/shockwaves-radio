@@ -17,7 +17,7 @@ function formatTimeAgo(unixTimestamp: number) {
 
 export default function SongCard({ name, artist, timeAgo, url }: { name: string, artist: string, timeAgo: number, url: string | null }) {
   return (
-    <div className="flex bg-base-100 rounded-box relative min-w-96 shadow-xl">
+    <div className="flex bg-base-100 rounded-box relative shadow-xl">
       <span className="badge badge-secondary absolute -top-2 -right-3">
         {formatTimeAgo(timeAgo)}
       </span>

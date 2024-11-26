@@ -21,7 +21,7 @@ export default function ShowCard({ show }: { show: ShowWithHost }) {
   const end = formatTime(timeEnd);
 
   return (
-    <div className="flex bg-base-100 rounded-box min-w-96 shadow-xl">
+    <div className="flex bg-base-100 rounded-box shadow-xl">
       {show.host.imageUrl ? (
         <Image
           src={show.host.imageUrl}
