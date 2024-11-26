@@ -1,7 +1,4 @@
-import { faSpotify } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import Link from "next/link";
 
 function formatTimeAgo(unixTimestamp: number) {
   const secondsAgo = Math.floor((Date.now() - unixTimestamp * 1000) / 1000);
@@ -35,9 +32,6 @@ export default function SongCard({ name, artist, timeAgo, url }: { name: string,
       <div className="p-2 w-full overflow-hidden">
         <h2 className="font-bold text-xl truncate">{name}</h2>
         <p className="opacity-75 truncate">{artist}</p>
-        <Link href={url || "#"} target="_blank" className="btn btn-primary btn-block btn-sm">
-          Listen on <FontAwesomeIcon icon={faSpotify} className="size-5" />
-        </Link>
       </div>
     </div>
   );
