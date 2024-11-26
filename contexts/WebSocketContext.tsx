@@ -1,26 +1,40 @@
-'use client';
+"use client";
 
-import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import { useEffect, useState, createContext, useContext, ReactNode } from 'react';
 import { NowPlayingData } from '@/types/Music';
 
-interface WebSocketContextProps {
-  nowPlaying: NowPlayingData | null;
-}
-
-const WebSocketContext = createContext<WebSocketContextProps | undefined>(undefined);
+const WebSocketContext = createContext<{ nowPlaying: NowPlayingData | null }>({ nowPlaying: null });
 
 export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   const [nowPlaying, setNowPlaying] = useState<NowPlayingData | null>(null);
 
   useEffect(() => {
-    const socket = new WebSocket("wss://vh-azura01.radio.volthosting.co.uk/api/live/nowplaying/websocket");
+    const fetchInitialData = async () => {
+      try {
+        const response = await fetch(
+          'https://vh-azura01.radio.volthosting.co.uk/api/nowplaying/shockwaves_radio'
+        );
+        const data = await response.json();
+        setNowPlaying(data as NowPlayingData);
+      } catch (error) {
+        console.error('Error fetching initial Now Playing data:', error);
+      }
+    };
+
+    fetchInitialData();
+
+    const socket = new WebSocket(
+      'wss://vh-azura01.radio.volthosting.co.uk/api/live/nowplaying/websocket'
+    );
 
     socket.onopen = () => {
-      socket.send(JSON.stringify({
-        "subs": {
-          "station:shockwaves_radio": { "recover": true }
-        }
-      }));
+      socket.send(
+        JSON.stringify({
+          subs: {
+            'station:shockwaves_radio': { recover: true },
+          },
+        })
+      );
     };
 
     socket.onmessage = (event) => {
@@ -31,7 +45,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     };
 
     socket.onerror = (error) => {
-      console.error("WebSocket error:", error);
+      console.error('WebSocket error:', error);
     };
 
     return () => {
@@ -49,7 +63,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
 export const useWebSocket = () => {
   const context = useContext(WebSocketContext);
   if (!context) {
-    throw new Error("useWebSocket must be used within a WebSocketProvider");
+    throw new Error('useWebSocket must be used within a WebSocketProvider');
   }
   return context;
 };
