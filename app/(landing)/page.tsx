@@ -1,12 +1,21 @@
-import { WebSocketProvider } from '@/contexts/WebSocketContext';
 import { getShows } from '@/app/actions';
 import RecentlyPlayed from './components/RecentlyPlayed';
 import Link from 'next/link';
 import SongCard from '@/components/ui/SongCard';
 import ShowCard from '@/components/ui/ShowCard';
+import { splitAds } from '@/lib/Ads';
+import Image from 'next/image';
 
 export default async function Page() {
   const upcomingShows = await getShows();
+  const { leftAds, rightAds } = splitAds();
+  const getFallbackAd = () => {
+      if (rightAds.length > 0) return rightAds[0];
+      if (leftAds.length > 0) return leftAds[0];
+      return null;
+    };
+
+    const fallbackAd = getFallbackAd();
 
   return (
       <div className='space-y-16'>
@@ -23,7 +32,20 @@ export default async function Page() {
                 }}
               />
             )) : (
-              <p>No upcoming shows</p>
+              <div className="space-y-4">
+                <p>No upcoming shows</p>
+                {fallbackAd && (
+                  <Link href={fallbackAd.href} className="block mx-auto">
+                    <Image
+                      className="rounded-box"
+                      src={fallbackAd.src}
+                      height={600}
+                      width={600}
+                      alt={fallbackAd.alt}
+                    />
+                  </Link>
+                )}
+              </div>
             )}
           </div>
           <div className="space-y-4">

@@ -17,7 +17,7 @@ export default async function Page() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto p-4 space-y-8">
+    <div className="space-y-16 container max-w-screen-lg">
       <header className="border-b pb-4">
         <h1 className="text-4xl font-black">Dashboard</h1>
         <p className="opacity-75 text-lg">Welcome, {session.user.name}!</p>

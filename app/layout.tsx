@@ -6,6 +6,9 @@ import Navbar from "@/components/Navbar";
 import { WebSocketProvider } from "@/contexts/WebSocketContext";
 import Footer from "@/components/Footer";
 import { NowPlayingData } from "@/types/Music";
+import Image from "next/image";
+import Link from "next/link";
+import { splitAds } from "@/lib/Ads";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -42,6 +45,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const initialData = await fetchInitialData();
+  const { leftAds, rightAds } = splitAds();
 
   return (
     <html lang="en">
@@ -51,7 +55,7 @@ export default async function RootLayout({
             className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-b from-blue-900 to-slate-800 to-60%`}
           >
             <main className="min-h-screen space-y-16 mb-16">
-              <Navbar/>
+              <Navbar />
               {children}
             </main>
             <Footer />
