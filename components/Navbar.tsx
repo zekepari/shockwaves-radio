@@ -54,10 +54,10 @@ export default function NavbarBanner() {
   };
 
   return (
-    <section className="relative w-full h-[450px] text-white">
+    <section className="relative w-full h-[450px] text-white shadow-2xl">
       {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-40 shadow-xl"
+        className="absolute inset-0 bg-cover bg-center opacity-40"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 85%), url(${
             currentSong?.art || ""
