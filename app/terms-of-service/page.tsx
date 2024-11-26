@@ -118,7 +118,7 @@ export default function Page() {
         <p>
           For any questions regarding these Terms and Conditions or our Privacy Policy, please contact us at{' '}
           <a href="mailto:contact@shockwavesradio.com" className="text-blue-500">
-            contact@shockwavesradio.com
+            support@shockwavesradio.com
           </a>.
         </p>
       </section>
