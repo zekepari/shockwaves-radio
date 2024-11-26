@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import Navbar from "@/components/Navbar";
 import { WebSocketProvider } from "@/contexts/WebSocketContext";
 import Footer from "@/components/Footer";
+import { NowPlayingData } from "@/types/Music";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,15 +23,30 @@ export const metadata: Metadata = {
   description: "Online Radio Station that is ran by a community of music-enthusiasts and volunteer radio hosts, providing you with the top-quality songs",
 };
 
-export default function RootLayout({
+async function fetchInitialData(): Promise<NowPlayingData | null> {
+  try {
+    const response = await fetch(
+      "https://vh-azura01.radio.volthosting.co.uk/api/nowplaying/shockwaves_radio"
+    );
+    const data = await response.json();
+    return data as NowPlayingData;
+  } catch (error) {
+    console.error("Error fetching initial Now Playing data:", error);
+    return null;
+  }
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const initialData = await fetchInitialData();
+
   return (
     <html lang="en">
       <SessionProvider>
-        <WebSocketProvider>
+        <WebSocketProvider initialData={initialData}>
         <body data-theme="night"
             className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-b from-blue-900 to-slate-800 to-60%`}
           >

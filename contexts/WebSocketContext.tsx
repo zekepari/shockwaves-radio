@@ -5,24 +5,10 @@ import { NowPlayingData } from '@/types/Music';
 
 const WebSocketContext = createContext<{ nowPlaying: NowPlayingData | null }>({ nowPlaying: null });
 
-export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
-  const [nowPlaying, setNowPlaying] = useState<NowPlayingData | null>(null);
+export const WebSocketProvider = ({ children, initialData }: { children: ReactNode, initialData: NowPlayingData | null }) => {
+  const [nowPlaying, setNowPlaying] = useState<NowPlayingData | null>(initialData);
 
   useEffect(() => {
-    const fetchInitialData = async () => {
-      try {
-        const response = await fetch(
-          'https://vh-azura01.radio.volthosting.co.uk/api/nowplaying/shockwaves_radio'
-        );
-        const data = await response.json();
-        setNowPlaying(data as NowPlayingData);
-      } catch (error) {
-        console.error('Error fetching initial Now Playing data:', error);
-      }
-    };
-
-    fetchInitialData();
-
     const socket = new WebSocket(
       'wss://vh-azura01.radio.volthosting.co.uk/api/live/nowplaying/websocket'
     );
