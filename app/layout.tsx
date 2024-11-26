@@ -32,11 +32,13 @@ export default function RootLayout({
       <SessionProvider>
         <WebSocketProvider>
         <body data-theme="night"
-            className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-r from-indigo-950 to-slate-800 to-60% space-y-16`}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-b from-blue-900 to-slate-800 to-60%`}
           >
+            <main className="min-h-screen space-y-16 mb-16">
               <Navbar/>
               {children}
-              <Footer />
+            </main>
+            <Footer />
           </body>
         </WebSocketProvider>
       </SessionProvider>
