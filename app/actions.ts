@@ -25,7 +25,7 @@ export async function getHosts() {
   export async function createHost(formData: FormData) {
     const session = await auth();
 
-    if (isStaff(session?.user?.id)) {
+    if (!isStaff(session?.user?.id)) {
       return
     }
 
@@ -72,7 +72,7 @@ endTime: string;
 }) {
   const session = await auth();
 
-  if (isStaff(session?.user?.id)) {
+  if (!isStaff(session?.user?.id)) {
     return
   }
   

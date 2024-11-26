@@ -12,7 +12,7 @@ export default async function Page() {
     redirect("/auth/signin");
   }
 
-  if (isStaff(session.user.id)) {
+  if (!isStaff(session.user.id)) {
     return <div className="text-center text-red-500 font-bold mt-8">Not staff</div>;
   }
 
