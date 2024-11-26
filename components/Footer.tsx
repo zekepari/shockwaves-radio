@@ -2,6 +2,7 @@ import React from 'react';
 import { socialLinks } from '@/lib/Links';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -10,7 +11,7 @@ export default function Footer() {
         {/* Logo and Description */}
         <div className="flex flex-col items-center">
           <Link href="/" className="flex items-center gap-2 mb-4">
-            <img
+            <Image
               src="/shockwaves_1.png"
               alt="Shockwaves Radio Logo"
               width={40}
