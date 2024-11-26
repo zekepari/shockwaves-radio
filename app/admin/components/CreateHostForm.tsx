@@ -2,8 +2,13 @@
 
 import { useState, useTransition } from "react";
 import { createHost } from "@/app/actions";
+import { Host } from "@prisma/client";
 
-export default function CreateHostForm({ onHostCreated }: { onHostCreated: () => void }) {
+interface CreateHostFormProps {
+  onHostCreated: (newHost: Host) => void;
+}
+
+export default function CreateHostForm({ onHostCreated }: CreateHostFormProps) {
   const [name, setName] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [error, setError] = useState("");
@@ -15,8 +20,13 @@ export default function CreateHostForm({ onHostCreated }: { onHostCreated: () =>
     setError("");
     setSuccess("");
 
+    if (!name.trim()) {
+      setError("Host name cannot be empty.");
+      return;
+    }
+
     if (!imageFile) {
-      setError("Please upload an image");
+      setError("Please upload an image.");
       return;
     }
 
@@ -26,16 +36,25 @@ export default function CreateHostForm({ onHostCreated }: { onHostCreated: () =>
 
     startTransition(async () => {
       try {
-        await createHost(formData);
+        const newHost = await createHost(formData);
+
+        if (!newHost) {
+          setError("Failed to create the host. Please try again.");
+          return;
+        }
+
         setSuccess("Host created successfully!");
         setName("");
         setImageFile(null);
-        onHostCreated();
+
+        if (onHostCreated) {
+          onHostCreated(newHost);
+        }
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
         } else {
-          setError("An unexpected error occurred");
+          setError("An unexpected error occurred.");
         }
       }
     });

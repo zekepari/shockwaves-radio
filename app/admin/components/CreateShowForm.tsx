@@ -59,6 +59,11 @@ export default function CreateShowForm({ onShowCreated, hosts }: CreateShowFormP
         };
         const newShow = await createShow(showData);
   
+        if (!newShow) {
+          setError("Failed to create the show. Please try again.");
+          return;
+        }
+
         const formattedShow = {
           ...newShow,
           startTime: new Date(newShow.startTime),
