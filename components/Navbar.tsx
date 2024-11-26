@@ -7,8 +7,9 @@ import { navLinks, socialLinks } from '@/lib/Links';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPauseCircle, faPlayCircle } from '@fortawesome/free-regular-svg-icons';
+import { faPauseCircle, faPlayCircle, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { isStaff } from '@/lib/Staff';
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavbarBanner() {
   const { data: session } = useSession();
@@ -18,6 +19,7 @@ export default function NavbarBanner() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [liked, setLiked] = useState(false);
 
   const streamUrl =
     'https://vh-azura01.radio.volthosting.co.uk/listen/shockwaves_radio/radio.mp3';
@@ -31,18 +33,22 @@ export default function NavbarBanner() {
     }
   }, []);
 
-  const togglePlay = () => {
+  const togglePlay = async () => {
     if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        audioRef.current.src = streamUrl;
-        audioRef.current.load();
-        audioRef.current
-          .play()
-          .then(() => setIsPlaying(true))
-          .catch((error) => console.error('Error playing audio:', error));
+      try {
+        if (isPlaying) {
+          audioRef.current.pause();
+          setIsPlaying(false);
+        } else {
+          if (audioRef.current.src !== streamUrl) {
+            audioRef.current.src = streamUrl;
+            audioRef.current.load();
+          }
+          await audioRef.current.play();
+          setIsPlaying(true);
+        }
+      } catch (error) {
+        console.error('Error toggling play state:', error);
       }
     }
   };
@@ -54,7 +60,7 @@ export default function NavbarBanner() {
         className="absolute inset-0 bg-cover bg-center opacity-40 shadow-xl"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 85%), url(${
-            currentSong?.art || '/default-banner.jpg'
+            currentSong?.art || ""
           })`,
         }}
       ></div>
@@ -168,7 +174,7 @@ export default function NavbarBanner() {
       <div className="relative z-10 flex flex-col items-center justify-end h-full pb-8">
         <div className="relative mb-4">
           <Image
-            src={currentSong?.art || '/default-album.jpg'}
+            src={currentSong?.art || "/shockwaves_1.png"}
             alt="Album Cover"
             className="rounded-full shadow-lg"
             width={100}
@@ -176,6 +182,7 @@ export default function NavbarBanner() {
             style={{
               boxShadow: '0 0 15px rgba(255, 255, 255, 0.8)',
             }}
+            priority
           />
         </div>
         <h2 className="text-3xl font-bold mb-1">
@@ -184,12 +191,22 @@ export default function NavbarBanner() {
         <h3 className="text-xl font-light opacity-80">
           {currentSong?.artist || 'Loading...'}
         </h3>
-        <div className="mt-4">
+        <div className="mt-4 flex gap-4">
+          {/* Play/Pause Button */}
           <button
             onClick={togglePlay}
             className="text-5xl hover:text-indigo-300 transition-transform transform hover:scale-110"
           >
             <FontAwesomeIcon icon={isPlaying ? faPauseCircle : faPlayCircle} />
+          </button>
+
+          {/* Like Button */}
+          <button
+            onClick={() => setLiked(!liked)}
+            className="text-5xl hover:text-red-400 transition-transform transform hover:scale-110"
+            aria-label="Like song"
+          >
+            <FontAwesomeIcon icon={liked ? faHeartSolid : faHeart} />
           </button>
         </div>
       </div>
