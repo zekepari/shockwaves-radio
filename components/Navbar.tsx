@@ -10,19 +10,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPauseCircle, faPlayCircle, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { isStaff } from '@/lib/Staff';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { Song } from '@/types/Music';
 
 export default function NavbarBanner() {
   const { data: session } = useSession();
   const { nowPlaying } = useWebSocket();
-  const currentSong = nowPlaying?.now_playing?.song;
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [liked, setLiked] = useState(false);
+  const [currentSong, setCurrentSong] = useState<Song | null>(null);
 
   const streamUrl =
     'https://vh-azura01.radio.volthosting.co.uk/listen/shockwaves_radio/radio.mp3';
+
+    useEffect(() => {
+      const newSong = nowPlaying?.now_playing.song;
+      
+      if (!currentSong || currentSong.id !== newSong?.id) {
+        setCurrentSong(newSong || null);
+        setLiked(false);
+      }
+    }, [nowPlaying, currentSong]);
 
   useEffect(() => {
     if (!audioRef.current) {
